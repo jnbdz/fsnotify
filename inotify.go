@@ -291,6 +291,10 @@ func (w *Watcher) readEvents() {
 				name += "/" + strings.TrimRight(string(bytes[0:nameLen]), "\000")
 			}
 
+			if ok && mask&unix.IN_CREATE == unix.IN_CREATE && isDir(name) {
+				w.Add(name)
+			}
+
 			event := newEvent(name, mask)
 
 			// Send the events that are not ignored on the events channel
