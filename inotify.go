@@ -296,7 +296,7 @@ func (w *Watcher) readEvents() {
 				// error handling
 			}
 
-			if ok && mask&unix.IN_CREATE == unix.IN_CREATE && fileInfo.isDir(name) {
+			if ok && mask&unix.IN_CREATE == unix.IN_CREATE && fileInfo.IsDir(name) {
 				w.Add(name)
 			}
 
