@@ -291,7 +291,12 @@ func (w *Watcher) readEvents() {
 				name += "/" + strings.TrimRight(string(bytes[0:nameLen]), "\000")
 			}
 
-			if ok && mask&unix.IN_CREATE == unix.IN_CREATE && isDir(name) {
+			fileInfo, err := os.Stat(name)
+			if err != nil {
+				// error handling
+			}
+
+			if ok && mask&unix.IN_CREATE == unix.IN_CREATE && fileInfo.isDir(name) {
 				w.Add(name)
 			}
 
