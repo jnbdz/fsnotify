@@ -291,6 +291,7 @@ func (w *Watcher) readEvents() {
 				name += "/" + strings.TrimRight(string(bytes[0:nameLen]), "\000")
 			}
 
+			// Monitoring sub-dir that are added
 			fileInfo, err := os.Stat(name)
 			if err != nil {
 				// error handling
