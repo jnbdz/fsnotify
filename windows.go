@@ -480,6 +480,16 @@ func (w *Watcher) readEvents() {
 			name := syscall.UTF16ToString(buf)
 			fullname := filepath.Join(watch.path, name)
 
+			// Monitoring sub-dir that are added
+			fileInfo, err := os.Stat(fullname)
+			if err != nil {
+				// error handling
+			}
+
+			if mask&sysFSCREATE == sysFSCREATE && fileInfo.IsDir() {
+				w.Add(fullname)
+			}
+
 			var mask uint64
 			switch raw.Action {
 			case syscall.FILE_ACTION_REMOVED:
